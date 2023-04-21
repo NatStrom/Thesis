@@ -77,6 +77,7 @@ print('these risks have been pulled', df['rei_name'].unique())
 # ## 3. FILTER, RENAME AND CLEAN
 # =============================================================================
 #filter only the wanted columns
+df = df.loc[df['metric_id'].isin([3])]
 df_filtered = df.filter(['measure_name', 'location_name',
                          'sex_name', 'age_name', 'rei_id', 'cause_name',
                          'cause_id','rei_name', 'year', 'val', 'upper',
@@ -99,7 +100,7 @@ def categorize(row):
         return 'SSA_east'
     if row ['country'] == 'Mauretania' or row['country']== 'Equatorial Guinea' or row['country']=='Gambia' or row['country']=='Cabo Verde' or row['country']=='Benin' or row['country']=='Niger' or row['country'] == 'Côte d´Ivoire' or row['country']== 'Nigeria' or row['country']== 'Burkina Faso' or row['country']=='Liberia' or row['country']=='Mali' or row['country']=='Sierra Leone' or row['country']=='Senegal' or row['country']=='Guinea-Bissau' or row['country']=='Ghana' or row['country']=='Cameroon':
         return 'SSA_west'
-    if row['country'] == 'South Africa' or row['country']=='Namibia' or row['country']=='Eswatini' or row['country']=='Botswana'  or row['country']=='Lesotho':
+    if  row['country']=='Namibia' or row['country']=='Eswatini' or row['country']=='Botswana'  or row['country']=='Lesotho':
         return 'SSA_south'
     return 'SSA_middle'
 df_filtered['region_SSA'] = df_filtered.apply(lambda row: categorize(row), axis=1)
@@ -145,11 +146,12 @@ df_WASH = df_WASH.dropna(subset=['iso'])
 
 df_WASH.head()
 df_WASH.columns
-df_East = df_WASH.loc[df_WASH['region_SSA'].isin(['SSA_east'])]
+#df_East = df_WASH.loc[df_WASH['region_SSA'].isin(['SSA_east'])]
 # standardize the years
-df_East_standard = df_East.copy()
-df_East_standard = df_East_standard.loc[(df_East_standard['age']=='All ages') & (df_East_standard['sex']=='btsx')]
-df_East_standard
+#df_East_standard = df_East.copy()
+df_WASH_standard = df_WASH.copy()
+df_WASH_standard = df_WASH_standard.loc[(df_WASH_standard['age']=='All ages') & (df_WASH_standard['sex']=='btsx')]
+df_WASH_standard
 #safe data to csv as back up
 os.getcwd()
-df_East_standard.to_csv('df_East_standard.csv')
+df_WASH_standard.to_csv('df_DALY_SSA.csv')
