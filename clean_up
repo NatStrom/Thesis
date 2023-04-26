@@ -109,6 +109,8 @@ df_filtered['region_SSA'] = df_filtered.apply(lambda row: categorize(row), axis=
 #fix naming of the gender values
 df_filtered = df_filtered.replace({'Both': 'btsx','Male':'mle','Female':'fmle'})
 
+#fix coury names to match the right iso
+df_filtered = df_filtered.replace({'Democratic Republic of the Congo': 'Congo, DRC','United Republic of Tanzania':'Tanzania'})
 
 #only filter our level 3 WASH risk factors
 df_WASH =df_filtered.copy()
@@ -143,7 +145,7 @@ print(list_iso)
 
 #clear out the rows with '' in iso names
 df_WASH = df_WASH.dropna(subset=['iso'])
-
+list(df_WASH.country.unique())
 df_WASH.head()
 df_WASH.columns
 #df_East = df_WASH.loc[df_WASH['region_SSA'].isin(['SSA_east'])]
